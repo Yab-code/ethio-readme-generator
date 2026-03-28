@@ -21,6 +21,14 @@ type TechCategory = {
   items: string[];
 };
 
+type AboutForm = {
+  fullName: string;
+  role: string;
+  location: string;
+  focus: string;
+  bio: string;
+};
+
 function Toggle({ label, value, onChange }: ToggleProps) {
   return (
     <div className="flex items-center justify-between rounded-xl border border-white/10 bg-black/30 p-4">
@@ -85,6 +93,13 @@ export default function Home() {
   const [step, setStep] = useState(1);
   const [username, setUsername] = useState("");
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [about, setAbout] = useState<AboutForm>({
+    fullName: "",
+    role: "",
+    location: "",
+    focus: "",
+    bio: "",
+  });
   const [githubStats, setGithubStats] = useState({
     theme: "dark",
     border: true,
@@ -264,31 +279,55 @@ const toggleTech = (tech: string) => {
   ] as const;
 
   const generateMarkdown = () => {
-    const techBadges = selectedTech
-      .map((tech) => {
-        const badgeLabel = encodeURIComponent(tech);
-        const logoLabel = tech
-          .toLowerCase()
-          .replace(/\./g, "")
-          .replace(/\s+/g, "-")
-          .replace(/\//g, "-");
+  const techBadges = selectedTech
+    .map((tech) => {
+      const badgeLabel = encodeURIComponent(tech);
+      const logoLabel = tech
+        .toLowerCase()
+        .replace(/\./g, "")
+        .replace(/\s+/g, "-")
+        .replace(/\//g, "-");
 
-        return `![${tech}](https://img.shields.io/badge/${badgeLabel}-black?style=for-the-badge&logo=${logoLabel})`;
-      })
-      .join(" ");
+      return `![${tech}](https://img.shields.io/badge/${badgeLabel}-black?style=for-the-badge&logo=${logoLabel})`;
+    })
+    .join(" ");
 
-    return `# Hi there 👋
+  return `<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F9D58,50:F4B400,100:DB4437&height=200&section=header&text=Selam%20Yabets&fontSize=40&fontColor=ffffff" />
+
+# 👋 ሰላም | Hello, I'm Yabets
+
+◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆
+
+![Made in Ethiopia](https://img.shields.io/badge/Made%20in-Ethiopia-078930?style=for-the-badge)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ## 🚀 About Me
 - Username: ${username || "your-github-username"}
+- Full Name: ${about.fullName || "Your Name"}
+- Role: ${about.role || "Your Role"}
+- Location: ${about.location || "Your Location"}
+- Focus: ${about.focus || "Your Focus"}
+
+${about.bio || "Write a short bio in step 2."}
+
+🟩🟨🟥🟩🟨🟥🟩🟨🟥
 
 ## 📊 GitHub Stats
-![Stats](https://github-readme-stats.vercel.app/api?username=${username || "your-github-username"}&theme=${githubStats.theme}&show_icons=true)
+![Stats](https://github-readme-stats.vercel.app/api?username=${
+    username || "your-github-username"
+  }&theme=${githubStats.theme}&show_icons=true)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ## 🛠 Tech Stack
 ${techBadges || "_Choose your stack in step 5 to add badges here._"}
-`;
-  };
+
+◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:DB4437,50:F4B400,100:0F9D58&height=120&section=footer" />`;
+};
+
 
   const handleCopyMarkdown = async () => {
     await navigator.clipboard.writeText(generateMarkdown());
@@ -405,14 +444,44 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
               </h2>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <input placeholder="Full Name" className="input" />
-                <input placeholder="Role" className="input" />
-                <input placeholder="Location" className="input" />
-                <input placeholder="Focus" className="input" />
-                <input placeholder="Portfolio" className="input md:col-span-2" />
+                <input
+                  placeholder="Full Name"
+                  className="input"
+                  value={about.fullName}
+                  onChange={(e) =>
+                    setAbout({ ...about, fullName: e.target.value })
+                  }
+                />
+                <input
+                  placeholder="Role"
+                  className="input"
+                  value={about.role}
+                  onChange={(e) => setAbout({ ...about, role: e.target.value })}
+                />
+                <input
+                  placeholder="Location"
+                  className="input"
+                  value={about.location}
+                  onChange={(e) =>
+                    setAbout({ ...about, location: e.target.value })
+                  }
+                />
+                <input
+                  placeholder="Focus"
+                  className="input"
+                  value={about.focus}
+                  onChange={(e) =>
+                    setAbout({ ...about, focus: e.target.value })
+                  }
+                />
               </div>
 
-              <textarea placeholder="Short Bio" className="input h-32 w-full" />
+              <textarea
+                placeholder="Short Bio"
+                className="input h-32 w-full"
+                value={about.bio}
+                onChange={(e) => setAbout({ ...about, bio: e.target.value })}
+              />
 
               <div className="flex justify-end">
                 <button
