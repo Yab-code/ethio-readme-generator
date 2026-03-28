@@ -19,40 +19,28 @@ export default function TechBackground() {
             color: "#020617", // darker for contrast
           },
 
-          particles: {
-            number: {
-              value: 160, // 🔥 MORE particles
-              density: { enable: true, area: 800 },
-            },
-
-            color: {
-              value: ["#22d3ee", "#06b6d4", "#67e8f9"], // brighter cyan tones
-            },
-
-            links: {
-              enable: true,
-              distance: 130,
-              color: "#22d3ee",
-              opacity: 0.7, // 🔥 stronger lines
-              width: 1.2,
-            },
-
-            move: {
-              enable: true,
-              speed: 1.8, // 🔥 faster movement
-              outModes: {
-                default: "bounce",
-              },
-            },
-
-            size: {
-              value: { min: 1, max: 3 },
-            },
-
-            opacity: {
-              value: 0.8,
-            },
-          },
+         particles: {
+  number: {
+    value: 160,
+  },
+  color: {
+    value: ["#ffffff"],
+  },
+  links: {
+    enable: true,
+    distance: 150,
+    color: "#ffffff",
+    opacity: 0.4,
+    width: 1,
+  },
+  move: {
+    enable: true,
+    speed: 2,
+  },
+  size: {
+    value: { min: 1, max: 3 },
+  },
+},
 
           interactivity: {
             events: {
