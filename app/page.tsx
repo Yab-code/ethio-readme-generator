@@ -378,7 +378,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
             <div>
               <div className="text-xl font-bold leading-none tracking-wide text-cyan-400 sm:text-2xl">
-                GitHub Builder
+                Git Builder
               </div>
               <div className="mt-1 text-xs uppercase tracking-[0.28em] text-cyan-100/55">
                 README Studio
