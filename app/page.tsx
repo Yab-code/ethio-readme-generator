@@ -349,13 +349,16 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
   return (
     <main className="relative min-h-dvh overflow-x-hidden text-white">
+      {/* Animated background */}
       <TechBackground />
 
       <div className="relative z-10 flex min-h-dvh flex-col bg-gradient-to-br from-[#0a0f1c]/60 via-[#0f172a]/50 to-black/60">
+        {/* Top message bar */}
         <div className="w-full border-b border-white/10 py-2 text-center text-base leading-none text-gray-400 backdrop-blur-md">
           &quot;Make your GitHub professional.&quot;
         </div>
 
+        {/* Sticky navbar */}
         <div
           className={`sticky top-0 z-30 flex w-full items-center justify-between border-b px-4 py-4 transition-all duration-300 sm:px-6 lg:px-8 ${
             hasScrolled
@@ -388,6 +391,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
           </div>
         </div>
 
+        {/* Global back button */}
         <button
           onClick={() => setStep((current) => Math.max(current - 1, 1))}
           disabled={step === 1}
@@ -396,6 +400,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
           Back
         </button>
 
+        {/* Step 1: identity */}
         {step === 1 && (
           <section className="flex flex-1 flex-col items-center justify-between gap-12 px-6 py-12 md:flex-row md:px-10 md:py-16">
             <div className="max-w-xl space-y-8">
@@ -421,10 +426,19 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
               </button>
             </div>
 
-            <div className="h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl sm:h-72 sm:w-72" />
+            <div className="relative h-[280px] w-[280px] shrink-0 sm:h-[340px] sm:w-[340px]">
+              <div className="absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/programming.svg"
+                alt="Developer illustration"
+                className="relative h-full w-full -ml-50 object-contain drop-shadow-[0_24px_80px_rgba(34,211,238,0.18)]"
+              />
+            </div>
           </section>
         )}
 
+        {/* Step 2: about form */}
         {step === 2 && (
           <section className="flex flex-1 flex-col items-center justify-center gap-8 px-6 py-10 md:flex-row md:gap-12 md:px-10 md:py-12">
             <div className="relative h-64 w-64 shrink-0 md:h-[300px] md:w-[300px]">
@@ -432,7 +446,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
               {/* Using a plain img here avoids extra remote image config for this external asset. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://illustrations.popsy.co/gray/programming.svg"
+                src="/github.svg"
                 alt="Programming illustration"
                 className="relative h-full w-full"
               />
@@ -495,6 +509,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
           </section>
         )}
 
+        {/* Step 3: stats settings */}
         {step === 3 && (
           <section className="flex flex-1 items-center justify-center px-6 py-10 md:px-10">
             <div className="w-full max-w-2xl space-y-8">
@@ -560,6 +575,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
           </section>
         )}
 
+        {/* Step 4: social links */}
         {step === 4 && (
           <section className="flex flex-1 flex-col items-center justify-center px-6 py-10 md:px-10">
 
@@ -594,6 +610,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
           </section>
         )}
 
+        {/* Step 5: tech stack selector */}
         {step === 5 && (
           <section className="flex flex-1 flex-col items-center px-6 py-10 text-center">
             <div className="w-full max-w-7xl">
@@ -662,6 +679,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
           </section>
         )}
 
+        {/* Step 6: markdown output */}
         {step === 6 && (
           <section className="flex flex-1 flex-col items-center justify-center px-6 py-10">
             <div className="w-full max-w-5xl space-y-8 text-center">
@@ -713,12 +731,14 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
           </section>
         )}
 
+        {/* Footer */}
         <div className="mt-auto flex w-full items-center justify-between border-t border-white/10 px-4 py-4 text-base leading-none text-gray-400 backdrop-blur-md sm:px-6 lg:px-8">
           <div>(c) {new Date().getFullYear()} GitHub Builder</div>
           <div>{stepTitles[step]}</div>
         </div>
       </div>
 
+      {/* Shared input styles */}
       <style jsx>{`
         .input {
           min-width: 0;
