@@ -21,6 +21,8 @@ type TechCategory = {
   items: string[];
 };
 
+type Step = 1 | 2 | 3 | 4 | 5 | 6;
+
 type AboutForm = {
   fullName: string;
   role: string;
@@ -90,7 +92,7 @@ function SocialLinkCard({
 }
 
 export default function Home() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<Step>(1);
   const [username, setUsername] = useState("");
   const [hasScrolled, setHasScrolled] = useState(false);
   const [about, setAbout] = useState<AboutForm>({
@@ -393,7 +395,9 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
         {/* Global back button */}
         <button
-          onClick={() => setStep((current) => Math.max(current - 1, 1))}
+          onClick={() =>
+            setStep((current) => (current > 1 ? ((current - 1) as Step) : 1))
+          }
           disabled={step === 1}
           className="fixed left-4 top-35 z-40 rounded-full border border-white/12 bg-slate-950/75 px-4 py-3 text-sm font-semibold leading-none text-white shadow-[0_16px_40px_rgba(2,6,23,0.35)] backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/35 hover:text-cyan-200 disabled:cursor-not-allowed disabled:opacity-45 sm:left-6 lg:left-8"
         >
