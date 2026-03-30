@@ -108,14 +108,14 @@ export default function Home() {
     commits: true,
     privateCommits: false,
   });
-const [selectedTech, setSelectedTech] = useState<string[]>([]);
-const toggleTech = (tech: string) => {
-  setSelectedTech((prev) =>
-    prev.includes(tech)
-      ? prev.filter((t) => t !== tech)
-      : [...prev, tech]
-  );
-};
+  const [selectedTech, setSelectedTech] = useState<string[]>([]);
+  const toggleTech = (tech: string) => {
+    setSelectedTech((prev) =>
+      prev.includes(tech)
+        ? prev.filter((t) => t !== tech)
+        : [...prev, tech]
+    );
+  };
   useEffect(() => {
     const onScroll = () => {
       setHasScrolled(window.scrollY > 16);
@@ -356,13 +356,13 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
       <div className="relative z-10 flex min-h-dvh flex-col bg-gradient-to-br from-[#0a0f1c]/60 via-[#0f172a]/50 to-black/60">
         {/* Top message bar */}
-        <div className="w-full border-b border-white/10 py-2 text-center text-base leading-none text-gray-400 backdrop-blur-md">
+        <div className="w-full border-b border-white/10 px-4 py-2 text-center text-sm leading-snug text-gray-400 backdrop-blur-md sm:text-base">
           &quot;Make your GitHub professional.&quot;
         </div>
 
         {/* Sticky navbar */}
         <div
-          className={`sticky top-0 z-30 flex w-full items-center justify-between border-b px-4 py-4 transition-all duration-300 sm:px-6 lg:px-8 ${
+          className={`sticky top-0 z-30 flex w-full flex-wrap items-center justify-between gap-3 border-b px-4 py-4 transition-all duration-300 sm:px-6 lg:px-8 ${
             hasScrolled
               ? "border-cyan-400/20 bg-slate-950/75 shadow-[0_18px_50px_rgba(2,6,23,0.45)] backdrop-blur-2xl"
               : "border-white/10 bg-slate-950/35 backdrop-blur-md"
@@ -388,29 +388,29 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
             </div>
           </div>
 
-          <div className="text-right text-sm leading-none text-gray-400 sm:text-base">
+          <div className="w-full text-left text-sm leading-none text-gray-400 sm:w-auto sm:text-right sm:text-base">
             {stepTitles[step]} / Step {step}
           </div>
         </div>
 
         {/* Global back button */}
-        <button
-          onClick={() =>
-            setStep((current) => (current > 1 ? ((current - 1) as Step) : 1))
-          }
-          disabled={step === 1}
-          className="fixed left-4 top-35 z-40 rounded-full border border-white/12 bg-slate-950/75 px-4 py-3 text-sm font-semibold leading-none text-white shadow-[0_16px_40px_rgba(2,6,23,0.35)] backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/35 hover:text-cyan-200 disabled:cursor-not-allowed disabled:opacity-45 sm:left-6 lg:left-8"
-        >
-          Back
-        </button>
+        <div className="px-4 pt-4 sm:px-6 lg:px-8">
+          <button
+            onClick={() =>
+              setStep((current) => (current > 1 ? ((current - 1) as Step) : 1))
+            }
+            disabled={step === 1}
+            className="inline-flex rounded-full border border-white/12 bg-slate-950/75 px-4 py-3 text-sm font-semibold leading-none text-white shadow-[0_16px_40px_rgba(2,6,23,0.35)] backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/35 hover:text-cyan-200 disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            Back
+          </button>
+        </div>
 
         {/* Step 1: identity */}
         {step === 1 && (
-          <section className="flex flex-1 flex-col items-center justify-between gap-12 px-6 py-12 md:flex-row md:px-10 md:py-16">
-            <div className="max-w-xl space-y-8">
-              
-
-              <h1 className="text-5xl font-bold leading-none sm:text-6xl md:text-7xl">
+          <section className="flex flex-1 flex-col-reverse items-center justify-center gap-10 px-4 py-10 sm:px-6 md:flex-row md:justify-between md:px-10 md:py-16">
+            <div className="w-full max-w-xl space-y-6 text-center md:space-y-8 md:text-left">
+              <h1 className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
                 Build Your <br />
                 <span className="text-cyan-400">Developer Profile</span>
               </h1>
@@ -419,24 +419,24 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter GitHub username"
-                className="w-full border-b border-cyan-400 bg-transparent py-3 text-xl leading-none outline-none"
+                className="w-full border-b border-cyan-400 bg-transparent py-3 text-base leading-none outline-none sm:text-xl"
               />
 
               <button
                 onClick={() => setStep(2)}
-                className="rounded-lg bg-cyan-500 px-6 py-3 text-lg font-medium leading-none"
+                className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
               >
                 Start
               </button>
             </div>
 
-            <div className="relative h-[280px] w-[280px] shrink-0 sm:h-[340px] sm:w-[340px]">
+            <div className="relative hidden h-[220px] w-full max-w-[280px] shrink-0 sm:h-[280px] sm:max-w-[320px] md:block md:h-[340px] md:max-w-[340px]">
               <div className="absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/programming.svg"
                 alt="Developer illustration"
-                className="relative h-full w-full -ml-50 object-contain drop-shadow-[0_24px_80px_rgba(34,211,238,0.18)]"
+                className="relative h-full w-full object-contain drop-shadow-[0_24px_80px_rgba(34,211,238,0.18)]"
               />
             </div>
           </section>
@@ -444,8 +444,8 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
         {/* Step 2: about form */}
         {step === 2 && (
-          <section className="flex flex-1 flex-col items-center justify-center gap-8 px-6 py-10 md:flex-row md:gap-12 md:px-10 md:py-12">
-            <div className="relative h-64 w-64 shrink-0 md:h-[300px] md:w-[300px]">
+          <section className="flex flex-1 flex-col items-center justify-center gap-8 px-4 py-10 sm:px-6 md:flex-row md:gap-12 md:px-10 md:py-12">
+            <div className="relative h-52 w-52 shrink-0 sm:h-64 sm:w-64 md:h-[300px] md:w-[300px]">
               <div className="absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl" />
               {/* Using a plain img here avoids extra remote image config for this external asset. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -457,7 +457,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
             </div>
 
             <div className="w-full max-w-2xl space-y-6">
-              <h2 className="text-4xl font-bold leading-none text-cyan-400">
+              <h2 className="text-3xl font-bold leading-none text-cyan-400 sm:text-4xl">
                 About You
               </h2>
 
@@ -486,11 +486,9 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                 />
                 <input
                   placeholder="Focus"
-                  className="input"
+                  className="input md:col-span-2"
                   value={about.focus}
-                  onChange={(e) =>
-                    setAbout({ ...about, focus: e.target.value })
-                  }
+                  onChange={(e) => setAbout({ ...about, focus: e.target.value })}
                 />
               </div>
 
@@ -504,7 +502,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
               <div className="flex justify-end">
                 <button
                   onClick={() => setStep(3)}
-                  className="rounded-lg bg-cyan-500 px-6 py-3 text-lg font-medium leading-none"
+                  className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
                 >
                   Next
                 </button>
@@ -515,10 +513,10 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
         {/* Step 3: stats settings */}
         {step === 3 && (
-          <section className="flex flex-1 items-center justify-center px-6 py-10 md:px-10">
+          <section className="flex flex-1 items-center justify-center px-4 py-10 sm:px-6 md:px-10">
             <div className="w-full max-w-2xl space-y-8">
 
-              <h2 className="text-4xl font-bold leading-none text-cyan-400">
+              <h2 className="text-3xl font-bold leading-none text-cyan-400 sm:text-4xl">
                 Flex your GitHub Stats
               </h2>
 
@@ -570,7 +568,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
               <div className="flex justify-end">
                 <button
                   onClick={() => setStep(4)}
-                  className="rounded-lg bg-cyan-500 px-6 py-3 text-lg font-medium leading-none"
+                  className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
                 >
                   Next
                 </button>
@@ -581,11 +579,11 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
         {/* Step 4: social links */}
         {step === 4 && (
-          <section className="flex flex-1 flex-col items-center justify-center px-6 py-10 md:px-10">
+          <section className="flex flex-1 flex-col items-center justify-center px-4 py-10 sm:px-6 md:px-10">
 
             <div className="mt-5 w-full max-w-6xl">
               <div className="mx-auto max-w-2xl text-center">
-                <h2 className="text-4xl font-semibold leading-none text-cyan-400">
+                <h2 className="text-3xl font-semibold leading-none text-cyan-400 sm:text-4xl">
                   Social Links
                 </h2>
               </div>
@@ -606,7 +604,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => setStep(5)}
-                className="rounded-lg bg-cyan-500 px-6 py-3 text-lg font-medium leading-none"
+                className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
               >
                 Next
               </button>
@@ -616,10 +614,10 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
         {/* Step 5: tech stack selector */}
         {step === 5 && (
-          <section className="flex flex-1 flex-col items-center px-6 py-10 text-center">
+          <section className="flex flex-1 flex-col items-center px-4 py-10 text-center sm:px-6">
             <div className="w-full max-w-7xl">
               <div className="mx-auto max-w-3xl">
-                <h2 className="text-4xl leading-none text-cyan-400">
+                <h2 className="text-3xl leading-none text-cyan-400 sm:text-4xl">
                   Tech Stack
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-slate-400">
@@ -656,7 +654,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                             key={item}
                             type="button"
                             onClick={() => toggleTech(item)}
-                            className={`rounded-full border px-4 py-2.5 text-sm font-medium leading-none transition-all duration-300 ${
+                            className={`rounded-full border px-3 py-2 text-xs font-medium leading-tight transition-all duration-300 sm:px-4 sm:py-2.5 sm:text-sm ${
                               isSelected
                                 ? "border-cyan-300/40 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-[0_12px_30px_rgba(34,211,238,0.22)]"
                                 : "border-white/10 bg-slate-950/65 text-slate-300 hover:-translate-y-0.5 hover:border-cyan-300/25 hover:text-white"
@@ -675,7 +673,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => setStep(6)}
-                className="rounded-lg bg-cyan-500 px-6 py-3 text-lg font-medium leading-none"
+                className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
               >
                 Next
               </button>
@@ -685,7 +683,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
         {/* Step 6: markdown output */}
         {step === 6 && (
-          <section className="flex flex-1 flex-col items-center justify-center px-6 py-10">
+          <section className="flex flex-1 flex-col items-center justify-center px-4 py-10 sm:px-6">
             <div className="w-full max-w-5xl space-y-8 text-center">
               <div>
                 <h2 className="text-3xl font-bold text-green-400 sm:text-4xl">
@@ -705,28 +703,28 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                 <textarea
                   readOnly
                   value={generateMarkdown()}
-                  className="h-72 w-full rounded-2xl border border-white/10 bg-black/50 p-4 font-mono text-sm leading-relaxed text-slate-100 outline-none"
+                  className="h-72 w-full rounded-2xl border border-white/10 bg-black/50 p-4 font-mono text-xs leading-relaxed text-slate-100 outline-none sm:text-sm"
                 />
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
                 <button
                   onClick={handleCopyMarkdown}
-                  className="rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium text-slate-950 transition-colors duration-300 hover:bg-cyan-400"
+                  className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium text-slate-950 transition-colors duration-300 hover:bg-cyan-400 sm:w-auto"
                 >
                   Copy Code
                 </button>
 
                 <button
                   onClick={handleDownloadMarkdown}
-                  className="rounded-lg bg-green-500 px-6 py-3 text-base font-medium text-slate-950 transition-colors duration-300 hover:bg-green-400"
+                  className="w-full rounded-lg bg-green-500 px-6 py-3 text-base font-medium text-slate-950 transition-colors duration-300 hover:bg-green-400 sm:w-auto"
                 >
                   Download Markdown
                 </button>
 
                 <button
                   onClick={() => setStep(1)}
-                  className="rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors duration-300 hover:border-cyan-300/35 hover:text-cyan-200"
+                  className="w-full rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors duration-300 hover:border-cyan-300/35 hover:text-cyan-200 sm:w-auto"
                 >
                   Create New
                 </button>
@@ -736,8 +734,8 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
         )}
 
         {/* Footer */}
-        <div className="mt-auto flex w-full items-center justify-between border-t border-white/10 px-4 py-4 text-base leading-none text-gray-400 backdrop-blur-md sm:px-6 lg:px-8">
-          <div>(c) {new Date().getFullYear()} GitHub Builder</div>
+        <div className="mt-auto flex w-full flex-col items-start justify-between gap-2 border-t border-white/10 px-4 py-4 text-sm leading-none text-gray-400 backdrop-blur-md sm:flex-row sm:items-center sm:gap-4 sm:px-6 sm:text-base lg:px-8">
+          <div>(c) {new Date().getFullYear()} Git Builder</div>
           <div>{stepTitles[step]}</div>
         </div>
       </div>
@@ -745,14 +743,22 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
       {/* Shared input styles */}
       <style jsx>{`
         .input {
+          width: 100%;
           min-width: 0;
           border-radius: 10px;
           border: 1px solid rgba(255, 255, 255, 0.1);
           background: rgba(0, 0, 0, 0.4);
           outline: none;
           padding: 12px;
-          font-size: 1.125rem;
-          line-height: 1;
+          font-size: 1rem;
+          line-height: 1.4;
+          color: white;
+        }
+
+        @media (min-width: 640px) {
+          .input {
+            font-size: 1.125rem;
+          }
         }
       `}</style>
     </main>
