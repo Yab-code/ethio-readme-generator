@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import TechBackground from "@/components/TechBackground";
 
 type ToggleProps = {
@@ -26,8 +26,6 @@ type Step = 1 | 2 | 3 | 4 | 5 | 6;
 type AboutForm = {
   fullName: string;
   role: string;
-  location: string;
-
   bio: string;
 };
 
@@ -95,10 +93,12 @@ export default function Home() {
   const [step, setStep] = useState<Step>(1);
   const [username, setUsername] = useState("");
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [techSearch, setTechSearch] = useState("");
+  const [activeTechCategory, setActiveTechCategory] = useState("All");
+  const [showSelectedOnly, setShowSelectedOnly] = useState(false);
   const [about, setAbout] = useState<AboutForm>({
     fullName: "",
     role: "",
-    location: "",
     bio: "",
   });
   const [githubStats, setGithubStats] = useState({
@@ -108,6 +108,7 @@ export default function Home() {
     privateCommits: false,
   });
   const [selectedTech, setSelectedTech] = useState<string[]>([]);
+  const deferredTechSearch = useDeferredValue(techSearch);
   const toggleTech = (tech: string) => {
     setSelectedTech((prev) =>
       prev.includes(tech)
@@ -196,6 +197,29 @@ export default function Home() {
       ],
     },
   ];
+  const techCategoryFilters = ["All", ...techCategories.map((category) => category.title)];
+  const normalizedTechSearch = deferredTechSearch.trim().toLowerCase();
+  const filteredTechCategories = techCategories
+    .filter(
+      (category) =>
+        activeTechCategory === "All" || category.title === activeTechCategory
+    )
+    .map((category) => ({
+      ...category,
+      items: category.items.filter((item) => {
+        const matchesSearch =
+          normalizedTechSearch.length === 0 ||
+          item.toLowerCase().includes(normalizedTechSearch);
+        const matchesSelected = !showSelectedOnly || selectedTech.includes(item);
+
+        return matchesSearch && matchesSelected;
+      }),
+    }))
+    .filter((category) => category.items.length > 0);
+  const visibleTechCount = filteredTechCategories.reduce(
+    (count, category) => count + category.items.length,
+    0
+  );
   const socialLinks = [
     {
       label: "Bluesky",
@@ -307,8 +331,6 @@ export default function Home() {
 - Username: ${username || "your-github-username"}
 - Full Name: ${about.fullName || "Your Name"}
 - Role: ${about.role || "Your Role"}
-- Location: ${about.location || "Your Location"}
-
 ${about.bio || "Write a short bio in step 2."}
 
 🟩🟨🟥🟩🟨🟥🟩🟨🟥
@@ -474,14 +496,6 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                   value={about.role}
                   onChange={(e) => setAbout({ ...about, role: e.target.value })}
                 />
-                <input
-                  placeholder="Location"
-                  className="input"
-                  value={about.location}
-                  onChange={(e) =>
-                    setAbout({ ...about, location: e.target.value })
-                  }
-                />
               </div>
 
               <textarea
@@ -622,8 +636,79 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                 </div>
               </div>
 
+              <div className="mt-8 rounded-[28px] border border-white/10 bg-white/[0.045] p-5 text-left backdrop-blur-xl">
+                <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+                  <label className="block">
+                    <span className="mb-2 block text-sm font-medium uppercase tracking-[0.18em] text-slate-400">
+                      Search tech
+                    </span>
+                    <input
+                      type="text"
+                      value={techSearch}
+                      onChange={(e) => setTechSearch(e.target.value)}
+                      placeholder="Search React, Docker, Prisma..."
+                      className="input w-full"
+                    />
+                  </label>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowSelectedOnly((prev) => !prev)}
+                    className={`inline-flex min-h-12 items-center justify-center rounded-full border px-4 py-3 text-sm font-semibold transition-all duration-300 ${
+                      showSelectedOnly
+                        ? "border-cyan-300/40 bg-cyan-400 text-slate-950 shadow-[0_12px_30px_rgba(34,211,238,0.22)]"
+                        : "border-white/10 bg-slate-950/65 text-slate-200 hover:border-cyan-300/25 hover:text-white"
+                    }`}
+                  >
+                    {showSelectedOnly ? "Showing selected only" : "Show selected only"}
+                  </button>
+                </div>
+
+                <div className="mt-5 flex flex-wrap gap-3">
+                  {techCategoryFilters.map((category) => {
+                    const isActive = activeTechCategory === category;
+
+                    return (
+                      <button
+                        key={category}
+                        type="button"
+                        onClick={() => setActiveTechCategory(category)}
+                        className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                          isActive
+                            ? "border-cyan-300/40 bg-cyan-400 text-slate-950 shadow-[0_12px_30px_rgba(34,211,238,0.22)]"
+                            : "border-white/10 bg-slate-950/65 text-slate-300 hover:border-cyan-300/25 hover:text-white"
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-400">
+                  <span>
+                    {visibleTechCount} result{visibleTechCount === 1 ? "" : "s"} across{" "}
+                    {filteredTechCategories.length} categor
+                    {filteredTechCategories.length === 1 ? "y" : "ies"}
+                  </span>
+                  {(techSearch || activeTechCategory !== "All" || showSelectedOnly) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTechSearch("");
+                        setActiveTechCategory("All");
+                        setShowSelectedOnly(false);
+                      }}
+                      className="text-sm font-medium text-cyan-200 transition-colors duration-300 hover:text-white"
+                    >
+                      Reset filters
+                    </button>
+                  )}
+                </div>
+              </div>
+
               <div className="mt-8 space-y-8 text-left">
-                {techCategories.map((category) => (
+                {filteredTechCategories.map((category) => (
                   <div
                     key={category.title}
                     className="rounded-[28px] border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl"
@@ -659,6 +744,12 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                     </div>
                   </div>
                 ))}
+
+                {filteredTechCategories.length === 0 && (
+                  <div className="rounded-[28px] border border-dashed border-white/10 bg-slate-950/40 p-8 text-center text-slate-400">
+                    No tech matches this filter yet. Try another search or reset the filters.
+                  </div>
+                )}
               </div>
             </div>
 
