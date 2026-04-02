@@ -27,7 +27,7 @@ type AboutForm = {
   fullName: string;
   role: string;
   location: string;
-  focus: string;
+
   bio: string;
 };
 
