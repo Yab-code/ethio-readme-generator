@@ -99,7 +99,6 @@ export default function Home() {
     fullName: "",
     role: "",
     location: "",
-    focus: "",
     bio: "",
   });
   const [githubStats, setGithubStats] = useState({
@@ -294,9 +293,9 @@ export default function Home() {
     })
     .join(" ");
 
-  return `<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F9D58,50:F4B400,100:DB4437&height=200&section=header&text=Selam%20Yabets&fontSize=40&fontColor=ffffff" />
+  return `<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F9D58,50:F4B400,100:DB4437&height=200&section=header&text=👋 ሰላም | Hello%20&fontSize=40&fontColor=ffffff" />
 
-# 👋 ሰላም | Hello, I'm Yabets
+# 👋 ሰላም | Hello
 
 ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆
 
@@ -309,7 +308,6 @@ export default function Home() {
 - Full Name: ${about.fullName || "Your Name"}
 - Role: ${about.role || "Your Role"}
 - Location: ${about.location || "Your Location"}
-- Focus: ${about.focus || "Your Focus"}
 
 ${about.bio || "Write a short bio in step 2."}
 
@@ -483,12 +481,6 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                   onChange={(e) =>
                     setAbout({ ...about, location: e.target.value })
                   }
-                />
-                <input
-                  placeholder="Focus"
-                  className="input md:col-span-2"
-                  value={about.focus}
-                  onChange={(e) => setAbout({ ...about, focus: e.target.value })}
                 />
               </div>
 
