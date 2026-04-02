@@ -82,10 +82,10 @@ function SocialLinkCard({
       </div>
 
       <div className="mt-5">
-        <input
-          placeholder={placeholder}
-          className="social-input w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3.5 text-base text-white outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-cyan-300/45 focus:bg-slate-950/90 focus:shadow-[0_0_0_4px_rgba(34,211,238,0.08)]"
-        />
+          <input
+            placeholder={placeholder}
+            className="social-input w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3.5 text-base text-white outline-none transition-all duration-300 placeholder:text-slate-500"
+          />
       </div>
     </label>
   );
