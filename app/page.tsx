@@ -2,6 +2,9 @@
 
 import { useDeferredValue, useEffect, useState } from "react";
 import TechBackground from "@/components/TechBackground";
+import { themes } from "@/lib/themes";
+import CountrySelector from "@/components/CountrySelector";
+import Banner from "@/components/Banner";
 
 type ToggleProps = {
   label: string;
@@ -92,6 +95,8 @@ function SocialLinkCard({
 export default function Home() {
   const [step, setStep] = useState<Step>(1);
   const [username, setUsername] = useState("");
+  const [country, setCountry] = useState<keyof typeof themes>("Ethiopia");
+  const currentTheme = themes[country];
   const [hasScrolled, setHasScrolled] = useState(false);
   const [techSearch, setTechSearch] = useState("");
   const [activeTechCategory, setActiveTechCategory] = useState("All");
@@ -304,26 +309,32 @@ export default function Home() {
   ] as const;
 
   const generateMarkdown = () => {
-  const techBadges = selectedTech
-    .map((tech) => {
-      const badgeLabel = encodeURIComponent(tech);
-      const logoLabel = tech
-        .toLowerCase()
-        .replace(/\./g, "")
-        .replace(/\s+/g, "-")
-        .replace(/\//g, "-");
+    const techBadges = selectedTech
+      .map((tech) => {
+        const badgeLabel = encodeURIComponent(tech);
+        const logoLabel = tech
+          .toLowerCase()
+          .replace(/\./g, "")
+          .replace(/\s+/g, "-")
+          .replace(/\//g, "-");
 
-      return `![${tech}](https://img.shields.io/badge/${badgeLabel}-black?style=for-the-badge&logo=${logoLabel})`;
-    })
-    .join(" ");
+        return `![${tech}](https://img.shields.io/badge/${badgeLabel}-black?style=for-the-badge&logo=${logoLabel})`;
+      })
+      .join(" ");
 
-  return `<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F9D58,50:F4B400,100:DB4437&height=200&section=header&text=👋 ሰላም | Hello%20&fontSize=40&fontColor=ffffff" />
+    const c0 = currentTheme.colors[0].replace("#", "");
+    const c50 = (currentTheme.colors[Math.floor(currentTheme.colors.length / 2)] || c0).replace("#", "");
+    const c100 = (currentTheme.colors[currentTheme.colors.length - 1] || c50).replace("#", "");
+    const gradientString = `0:${c0},50:${c50},100:${c100}`;
+    const encodedGreeting = encodeURIComponent(currentTheme.greeting);
 
-# 👋 ሰላም | Hello
+    return `<img src="https://capsule-render.vercel.app/api?type=waving&color=${gradientString}&height=200&section=header&text=👋 ${encodedGreeting} | Hello%20&fontSize=40&fontColor=ffffff" />
+
+# 👋 ${currentTheme.greeting} | Hello
 
 ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆
 
-![Made in Ethiopia](https://img.shields.io/badge/Made%20in-Ethiopia-078930?style=for-the-badge)
+![Made in ${currentTheme.name}](https://img.shields.io/badge/Made%20in-${currentTheme.name}-${c0}?style=for-the-badge)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -333,7 +344,7 @@ export default function Home() {
 - Role: ${about.role || "Your Role"}
 ${about.bio || "Write a short bio in step 2."}
 
-🟩🟨🟥🟩🟨🟥🟩🟨🟥
+${currentTheme.banner}
 
 ## 📊 GitHub Stats
 ![Stats](https://github-readme-stats.vercel.app/api?username=${
@@ -347,8 +358,8 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
 ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:DB4437,50:F4B400,100:0F9D58&height=120&section=footer" />`;
-};
+<img src="https://capsule-render.vercel.app/api?type=waving&color=${gradientString}&height=120&section=footer" />`;
+  };
 
 
   const handleCopyMarkdown = async () => {
@@ -435,12 +446,26 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                 <span className="text-cyan-400">Developer Profile</span>
               </h1>
 
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter GitHub username"
-                className="w-full border-b border-cyan-400 bg-transparent py-3 text-base leading-none outline-none sm:text-xl"
-              />
+              <Banner text={currentTheme.slogan} colors={currentTheme.colors} />
+              
+              <div className="space-y-6">
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter GitHub username"
+                  className="w-full border-b border-cyan-400 bg-transparent py-3 text-base leading-none outline-none sm:text-xl"
+                />
+
+                <div className="pt-2 sm:text-left text-center">
+                  <div className="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-cyan-400">
+                    Select Your Country Theme
+                  </div>
+                  <CountrySelector 
+                    selected={country} 
+                    onChange={(value) => setCountry(value as Extract<keyof typeof themes, string>)} 
+                  />
+                </div>
+              </div>
 
               <button
                 onClick={() => setStep(2)}
