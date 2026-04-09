@@ -385,9 +385,9 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
       {/* Animated background */}
       <TechBackground />
 
-      <div className="relative z-10 flex min-h-dvh flex-col bg-gradient-to-br from-[#0a0f1c]/60 via-[#0f172a]/50 to-black/60">
+      <div className="relative z-10 flex min-h-dvh flex-col bg-[linear-gradient(180deg,rgba(2,6,23,0.12),rgba(2,6,23,0.82))]">
         {/* Top message bar */}
-        <div className="w-full border-b border-white/10 px-4 py-2 text-center text-sm leading-snug text-gray-400 backdrop-blur-md sm:text-base">
+        <div className="w-full border-b border-white/10 bg-black/20 px-4 py-3 text-center text-sm leading-snug text-slate-300 backdrop-blur-xl sm:text-base">
           &quot;Make your GitHub professional.&quot;
         </div>
 
@@ -453,7 +453,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter GitHub username"
-                  className="w-full border-b border-cyan-400 bg-transparent py-3 text-base leading-none outline-none sm:text-xl"
+                  className="field-input w-full border-none bg-slate-950/65 text-base sm:text-xl"
                 />
 
                 <div className="pt-2 sm:text-left text-center">
@@ -469,7 +469,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
 
               <button
                 onClick={() => setStep(2)}
-                className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
+                className="primary-button w-full justify-center sm:w-auto"
               >
                 Start
               </button>
@@ -533,7 +533,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
               <div className="flex justify-end">
                 <button
                   onClick={() => setStep(3)}
-                  className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
+                  className="primary-button w-full justify-center sm:w-auto"
                 >
                   Next
                 </button>
@@ -599,7 +599,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
               <div className="flex justify-end">
                 <button
                   onClick={() => setStep(4)}
-                  className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
+                  className="primary-button w-full justify-center sm:w-auto"
                 >
                   Next
                 </button>
@@ -635,7 +635,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => setStep(5)}
-                className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
+                className="primary-button w-full justify-center sm:w-auto"
               >
                 Next
               </button>
@@ -781,7 +781,7 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => setStep(6)}
-                className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium leading-none sm:w-auto sm:text-lg"
+                className="primary-button w-full justify-center sm:w-auto"
               >
                 Next
               </button>
@@ -818,21 +818,21 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
               <div className="flex flex-wrap justify-center gap-4">
                 <button
                   onClick={handleCopyMarkdown}
-                  className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium text-slate-950 transition-colors duration-300 hover:bg-cyan-400 sm:w-auto"
+                  className="primary-button w-full justify-center sm:w-auto"
                 >
                   Copy Code
                 </button>
 
                 <button
                   onClick={handleDownloadMarkdown}
-                  className="w-full rounded-lg bg-green-500 px-6 py-3 text-base font-medium text-slate-950 transition-colors duration-300 hover:bg-green-400 sm:w-auto"
+                  className="ghost-button w-full justify-center border-emerald-300/20 bg-emerald-400/10 text-emerald-100 hover:border-emerald-300/35 hover:bg-emerald-400/16 hover:text-white sm:w-auto"
                 >
                   Download Markdown
                 </button>
 
                 <button
                   onClick={() => setStep(1)}
-                  className="w-full rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors duration-300 hover:border-cyan-300/35 hover:text-cyan-200 sm:w-auto"
+                  className="ghost-button w-full justify-center sm:w-auto"
                 >
                   Create New
                 </button>
@@ -848,27 +848,6 @@ ${techBadges || "_Choose your stack in step 5 to add badges here._"}
         </div>
       </div>
 
-      {/* Shared input styles */}
-      <style jsx>{`
-        .input {
-          width: 100%;
-          min-width: 0;
-          border-radius: 10px;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          background: rgba(0, 0, 0, 0.4);
-          outline: none;
-          padding: 12px;
-          font-size: 1rem;
-          line-height: 1.4;
-          color: white;
-        }
-
-        @media (min-width: 640px) {
-          .input {
-            font-size: 1.125rem;
-          }
-        }
-      `}</style>
     </main>
   );
 }

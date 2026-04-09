@@ -1,5 +1,3 @@
-import React from "react";
-
 type Props = {
   text: string;
   colors: string[];
@@ -7,19 +5,25 @@ type Props = {
 
 export default function Banner({ text, colors }: Props) {
   return (
-    <div className="relative overflow-hidden rounded-2xl p-[1px] shadow-[0_12px_40px_rgba(34,211,238,0.15)] mb-8 select-none">
-      <div 
-        className="absolute inset-0 opacity-50"
+    <div className="relative overflow-hidden rounded-[1.75rem] border border-white/12 p-[1px] shadow-[0_24px_60px_rgba(8,47,73,0.18)]">
+      <div
+        className="absolute inset-0 opacity-80"
         style={{
-          background: `linear-gradient(90deg, ${colors.join(", ")})`,
+          background: `linear-gradient(120deg, ${colors.join(", ")})`,
         }}
       />
-      <div className="relative flex min-h-[60px] items-center justify-center rounded-[15px] bg-slate-950/80 px-6 py-4 text-center font-bold tracking-widest text-white backdrop-blur-md transition-all duration-500 hover:bg-slate-950/60">
-        <span className="bg-clip-text text-transparent drop-shadow-md" style={{
-          backgroundImage: `linear-gradient(90deg, ${colors.join(", ")})`,
-        }}>
+      <div className="relative overflow-hidden rounded-[calc(1.75rem-1px)] bg-slate-950/82 px-6 py-5 backdrop-blur-xl">
+        <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.18),transparent_60%)]" />
+        <div
+          className="relative text-center text-lg font-semibold tracking-[0.26em] text-transparent sm:text-xl"
+          style={{
+            backgroundImage: `linear-gradient(120deg, ${colors.join(", ")})`,
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+          }}
+        >
           {text}
-        </span>
+        </div>
       </div>
     </div>
   );
